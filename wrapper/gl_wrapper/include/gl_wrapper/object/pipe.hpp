@@ -2,7 +2,7 @@
  *
  * Software License Agreement (BSD License)
  *
- *  Copyright (c) 2014, Daichi Yoshikawa
+ *  Copyright (c) 2016, Daichi Yoshikawa
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -36,20 +36,31 @@
  *
  *********************************************************************/
 
-#ifndef __GL_WRAPPER_GL_WRAPPER_HPP
-#define __GL_WRAPPER_GL_WRAPPER_HPP
+#ifndef __GL_WRAPPER_OBJECT_PIPE_HPP
+#define __GL_WRAPPER_OBJECT_PIPE_HPP
 
-#include <GL/gl.h>
-#include <GL/glut.h>
-#include <GL/freeglut.h>
-#include <gl_wrapper/render/render.hpp>
-#include <gl_wrapper/render/material.hpp>
-#include <gl_wrapper/exception/exceptions.hpp>
-#include <gl_wrapper/object/x_object.hpp>
-#include <gl_wrapper/object/x_deformable_object.hpp>
+#include <boost/shared_ptr.hpp>
 #include <gl_wrapper/object/simple_object.hpp>
-#include <gl_wrapper/object/grid.hpp>
-#include <gl_wrapper/object/coordinate.hpp>
-#include <gl_wrapper/object/pipe.hpp>
 
-#endif /* __GL_WRAPPER_GL_WRAPPER_HPP */
+namespace gl_wrapper
+{
+
+  class Pipe : public SimpleObject
+  {
+  public:
+    Pipe(double h, double r_in, double r_out, unsigned int slices, unsigned int stacks);
+
+  private:
+    void displayImpl();
+
+    GLuint model_list_;
+    double h_;
+    double r_in_;
+    double r_out_;
+    unsigned int slices_;
+    unsigned int stacks_;
+  };
+
+}
+
+#endif // __GL_WRAPPER_OBJECT_PIPE_HPP

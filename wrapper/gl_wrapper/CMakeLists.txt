@@ -84,6 +84,7 @@ add_library(
     src/object/simple_object.cpp
     src/object/grid.cpp
     src/object/coordinate.cpp
+    src/object/pipe.cpp
 )
 
 target_link_libraries(
