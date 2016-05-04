@@ -64,3 +64,4 @@ namespace gl_wrapper
 }
 
 #endif // __GL_WRAPPER_OBJECT_PIPE_HPP
+

@@ -50,6 +50,9 @@ GazeboInterface::GazeboInterface()
   ros::NodeHandle nh;
   client_start_timer_ = nh.serviceClient<gazebo_msgs::StartTimer>("/gazebo/start_timer");
   client_add_joint_   = nh.serviceClient<gazebo_msgs::AddJoint>("/gazebo/add_joint");
+
+  client_start_timer_.waitForExistence(ros::Duration(1.0));
+  client_add_joint_.waitForExistence(ros::Duration(1.0));
 }
 
 GazeboInterface::~GazeboInterface()
