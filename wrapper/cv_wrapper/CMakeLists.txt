@@ -12,12 +12,8 @@ else()
   message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-##############################################################################
-# Find dependencies
-##############################################################################
-
-find_package(
-  catkin REQUIRED COMPONENTS
+find_package(catkin REQUIRED
+  COMPONENTS
     cv_bridge
     image_transport
     message_filters
@@ -25,25 +21,14 @@ find_package(
     std_srvs
 )
 
-find_package(
-  OpenCV REQUIRED
-)
-
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${OpenCV_INCLUDE_DIRS}
 )
 
-##############################################################################
-# Define package
-##############################################################################
-
 catkin_package(
-  INCLUDE_DIRS
-    include
-  LIBRARIES
-    cv_wrapper
+  INCLUDE_DIRS include
+  LIBRARIES cv_wrapper
   CATKIN_DEPENDS
     cv_bridge
     image_transport
@@ -52,47 +37,10 @@ catkin_package(
     std_srvs
 )
 
-##############################################################################
-# Build
-##############################################################################
-
-add_library(
-  cv_wrapper
-    src/image_subscriber.cpp
-    src/utils.cpp
-    src/rect.cpp
-    src/hsv_mask.cpp
+add_library(cv_wrapper
+  src/image_subscriber.cpp
+  src/utils.cpp
+  src/rect.cpp
+  src/hsv_mask.cpp
 )
-
-target_link_libraries(
-  cv_wrapper
-    ${catkin_LIBRARIES}
-    ${OpenCV_LIBS}
-)
-
-#add_executable(
-#  cv_wrapper_test
-#    test/test.cpp
-#)
-
-#target_link_libraries(
-#  cv_wrapper_test
-#    ${catkin_LIBRARIES}
-#    cv_wrapper
-#)
-
-##############################################################################
-# Install
-##############################################################################
-
-install(
-  TARGETS
-    cv_wrapper
-#    cv_wrapper_test
-  ARCHIVE DESTINATION
-    ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION
-    ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION
-    ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+target_link_libraries(cv_wrapper ${catkin_LIBRARIES})

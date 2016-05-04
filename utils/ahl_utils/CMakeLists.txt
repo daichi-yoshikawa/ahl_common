@@ -12,31 +12,20 @@ else()
   message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-find_package(
-  catkin REQUIRED COMPONENTS
+find_package(catkin REQUIRED
+  COMPONENTS
+    cmake_modules
     roscpp
-)
-
-find_package(
-  cmake_modules REQUIRED
 )
 
 find_package(Eigen3)
 if(NOT EIGEN3_FOUND)
-  # Fallback to cmake_modules
-  find_package(cmake_modules REQUIRED)
   find_package(Eigen REQUIRED)
   set(EIGEN3_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS})
-  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})  # Not strictly necessary as Eigen is head only
-  # Possibly map additional variables to the EIGEN3_ prefix.
+  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})
 else()
   set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
 endif()
-
-link_directories(
-  ${catkin_LIBRARY_DIRS}
-  ${EIGEN3_LIBRARY_DIRS}
-)
 
 include_directories(
   include
@@ -45,48 +34,28 @@ include_directories(
 )
 
 catkin_package(
-  INCLUDE_DIRS
-    include
-  LIBRARIES
-    ahl_utils
+  INCLUDE_DIRS include
+  LIBRARIES ahl_utils
   CATKIN_DEPENDS
+    cmake_modules
     roscpp
-  DEPENDS
-    Eigen3
 )
 
-add_library(
-  ahl_utils
-    src/shared_memory.cpp
-    src/io_utils.cpp
-    src/str_utils.cpp
-    src/yaml_loader.cpp
-    src/yaml_utils.cpp
+add_library(ahl_utils
+  src/shared_memory.cpp
+  src/io_utils.cpp
+  src/str_utils.cpp
+  src/yaml_loader.cpp
+  src/yaml_utils.cpp
+)
+target_link_libraries(ahl_utils
+  ${catkin_LIBRARIES}
+  rt
+  yaml-cpp
 )
 
-target_link_libraries(
-  ahl_utils
-    ${catkin_LIBRARIES}
-    rt
-    yaml-cpp
-)
+add_executable(shm_writer test/shm_writer.cpp)
+target_link_libraries(shm_writer ahl_utils)
 
-add_executable(
-  shm_writer
-    test/shm_writer.cpp
-)
-
-target_link_libraries(
-  shm_writer
-    ahl_utils
-)
-
-add_executable(
-  shm_reader
-    test/shm_reader.cpp
-)
-
-target_link_libraries(
-  shm_reader
-    ahl_utils
-)
+add_executable(shm_reader test/shm_reader.cpp)
+target_link_libraries(shm_reader ahl_utils)

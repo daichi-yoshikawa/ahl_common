@@ -12,12 +12,9 @@ else()
   message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-##############################################################################
-# Find dependencies
-##############################################################################
-
-find_package(
-  catkin REQUIRED COMPONENTS
+find_package(catkin REQUIRED
+  COMPONENTS
+    cmake_modules
     cv_bridge
     cv_wrapper
     dynamic_reconfigure
@@ -27,26 +24,14 @@ find_package(
     roscpp
 )
 
-find_package(
-  cmake_modules REQUIRED
-)
-
 find_package(Eigen3)
 if(NOT EIGEN3_FOUND)
-  # Fallback to cmake_modules
-  find_package(cmake_modules REQUIRED)
   find_package(Eigen REQUIRED)
   set(EIGEN3_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS})
-  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})  # Not strictly necessary as Eigen is head only
-  # Possibly map additional variables to the EIGEN3_ prefix.
+  set(EIGEN3_LIBRARIES ${EIGEN_LIBRARIES})
 else()
   set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
 endif()
-
-link_directories(
-  ${catkin_LIBRARY_DIRS}
-  ${EIGEN3_LIBRARY_DIRS}
-)
 
 include_directories(
   include
@@ -54,17 +39,11 @@ include_directories(
   ${EIGEN3_INCLUDE_DIRS}
 )
 
-##############################################################################
-# Define package
-##############################################################################
-
 catkin_package(
-  INCLUDE_DIRS
-    include
-    ${EIGEN_INCLUDE_DIRS}
-  LIBRARIES
-    gl_wrapper
+  INCLUDE_DIRS include
+  LIBRARIES gl_wrapper
   CATKIN_DEPENDS
+    cmake_modules
     cv_bridge
     cv_wrapper
     dynamic_reconfigure
@@ -72,67 +51,37 @@ catkin_package(
     std_srvs
     ahl_utils
     roscpp
-  DEPENDS
-    Eigen3
 )
 
-##############################################################################
-# Build
-##############################################################################
+add_library(gl_wrapper
+  src/render/render.cpp
+  src/render/param.cpp
+  src/render/display.cpp
+  src/render/light.cpp
+  src/render/camera.cpp
+  src/render/material.cpp
+  src/render/quaternion.cpp
+  src/interface/mouse.cpp
+  src/object/object.cpp
+  src/object/x_object.cpp
+  src/object/x_deformable_object.cpp
+  src/object/x_hand.cpp
+  src/object/x_right_hand.cpp
+  src/object/x_left_hand.cpp
+  src/object/simple_object.cpp
+  src/object/grid.cpp
+  src/object/coordinate.cpp
+  src/object/pipe.cpp
+)
+target_link_libraries(gl_wrapper
+  GL
+  glut
+  GLU
+  ${catkin_LIBRARIES}
+)
 
-add_library(
+add_executable(gl_wrapper_test test/test.cpp)
+target_link_libraries(gl_wrapper_test
+  ${catkin_LIBRARIES}
   gl_wrapper
-    src/render/render.cpp
-    src/render/param.cpp
-    src/render/display.cpp
-    src/render/light.cpp
-    src/render/camera.cpp
-    src/render/material.cpp
-    src/render/quaternion.cpp
-    src/interface/mouse.cpp
-    src/object/object.cpp
-    src/object/x_object.cpp
-    src/object/x_deformable_object.cpp
-    src/object/x_hand.cpp
-    src/object/x_right_hand.cpp
-    src/object/x_left_hand.cpp
-    src/object/simple_object.cpp
-    src/object/grid.cpp
-    src/object/coordinate.cpp
-    src/object/pipe.cpp
-)
-
-target_link_libraries(
-  gl_wrapper
-    GL
-    glut
-    GLU
-    ${catkin_LIBRARIES}
-)
-
-add_executable(
-  gl_wrapper_test
-    test/test.cpp
-)
-
-target_link_libraries(
-  gl_wrapper_test
-    ${catkin_LIBRARIES}
-    gl_wrapper
-)
-
-##############################################################################
-# Install
-##############################################################################
-
-install(
-  TARGETS
-    gl_wrapper
-    gl_wrapper_test
-  ARCHIVE DESTINATION
-    ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION
-    ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION
-    ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

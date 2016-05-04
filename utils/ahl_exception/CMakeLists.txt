@@ -12,15 +12,9 @@ else()
   message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-find_package(
-  catkin REQUIRED COMPONENTS
-    roscpp
-)
+find_package(catkin REQUIRED COMPONENTS roscpp)
 
-catkin_package(
-  CATKIN_DEPENDS
-    roscpp
-)
+catkin_package(CATKIN_DEPENDS roscpp)
 
 include_directories(
   include
