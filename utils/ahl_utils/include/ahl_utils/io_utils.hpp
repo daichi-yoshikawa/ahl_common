@@ -122,13 +122,8 @@ namespace ahl_utils
     }
 
     static unsigned long getLineNum(std::ifstream& ifs);
-
-
-
-  private:
-
   };
 
-}
+} // namespace ahl_utils
 
-#endif /* __AHl_UTILS_IO_UTILS_HPP */
+#endif // __AHl_UTILS_IO_UTILS_HPP

@@ -44,8 +44,8 @@ using namespace ahl_gazebo_if;
 GazeboInterface::GazeboInterface()
   : subscribed_joint_states_(true)
 {
-  torque_sensor_ = TorqueSensorPtr(new TorqueSensor());
-  force_sensor_ = ForceSensorPtr(new ForceSensor());
+  torque_sensor_ = std::make_shared<TorqueSensor>();
+  force_sensor_ = std::make_shared<ForceSensor>();
 
   ros::NodeHandle nh;
   client_start_timer_ = nh.serviceClient<gazebo_msgs::StartTimer>("/gazebo/start_timer");
@@ -68,8 +68,8 @@ void GazeboInterface::addJoint(const std::string& name, double effort_time)
     joint_to_idx_[name] = size;
     joint_list_.push_back(name);
 
-    joint_effort_[name] = ahl_utils::SharedMemory<double>::Ptr(new ahl_utils::SharedMemory<double>(name + "::effort"));
-    joint_state_[name]  = ahl_utils::SharedMemory<double>::Ptr(new ahl_utils::SharedMemory<double>(name + "::state"));
+    joint_effort_[name] = std::make_shared<ahl_utils::SharedMemory<double>>(name + "::effort");
+  joint_state_[name]  = std::make_shared<ahl_utils::SharedMemory<double>>(name + "::state");
 
     gazebo_msgs::AddJoint srv;
     srv.request.name = name;
@@ -113,7 +113,7 @@ void GazeboInterface::connect()
 
 bool GazeboInterface::subscribed()
 {
-  boost::mutex::scoped_lock lock(mutex_);
+  ahl_utils::ScopedLock lock(mutex_);
   return subscribed_joint_states_;
 }
 
@@ -223,7 +223,7 @@ void GazeboInterface::rotateLink(const std::vector<Eigen::Quaternion<double> >& 
 
 const Eigen::VectorXd& GazeboInterface::getJointStates()
 {
-  boost::mutex::scoped_lock lock(mutex_);
+  ahl_utils::ScopedLock lock(mutex_);
 
   for(unsigned int i = 0; i < joint_list_.size(); ++i)
   {
@@ -242,18 +242,18 @@ const Eigen::VectorXd& GazeboInterface::getJointStates()
 
 const Eigen::VectorXd& GazeboInterface::getJointTorque()
 {
-  boost::mutex::scoped_lock lock(mutex_);
+  ahl_utils::ScopedLock lock(mutex_);
   return torque_sensor_->getJointTorque();
 }
 
 const Eigen::VectorXd& GazeboInterface::getExternalForce(const std::string& joint_name)
 {
-  boost::mutex::scoped_lock lock(mutex_);
+  ahl_utils::ScopedLock lock(mutex_);
   return force_sensor_->getExternalForce(joint_name);
 }
 
 const std::map<std::string, Eigen::VectorXd>& GazeboInterface::getExternalForce()
 {
-  boost::mutex::scoped_lock lock(mutex_);
+  ahl_utils::ScopedLock lock(mutex_);
   return force_sensor_->getExternalForce();
 }

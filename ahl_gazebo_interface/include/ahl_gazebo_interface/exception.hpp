@@ -57,7 +57,7 @@ namespace ahl_gazebo_if
     /// \brief Constructor
     /// \param src name of function which threw exception
     /// \param msg description of exception
-    Exception(const std::string& src, const std::string& msg) throw()
+    explicit Exception(const std::string& src, const std::string& msg) throw()
       : src_(src), msg_(msg)
     {}
 
@@ -80,6 +80,6 @@ namespace ahl_gazebo_if
     std::string msg_;
   };
 
-}
+} // namespace ahl_gazebo_if
 
-#endif /* __AHL_GAZEBO_INTERFACE_EXCEPTION_HPP */
+#endif // __AHL_GAZEBO_INTERFACE_EXCEPTION_HPP

@@ -58,18 +58,12 @@ void ForceSensor::add(const std::string& joint_name)
     sensor_to_idx_[sensor_name] = size;
     sensor_list_.push_back(sensor_name);
 
-    fx_[sensor_name + "::fx"] = ahl_utils::SharedMemory<double>::Ptr(
-      new ahl_utils::SharedMemory<double>(sensor_name + "::fx"));
-    fy_[sensor_name + "::fy"] = ahl_utils::SharedMemory<double>::Ptr(
-      new ahl_utils::SharedMemory<double>(sensor_name + "::fy"));
-    fz_[sensor_name + "::fz"] = ahl_utils::SharedMemory<double>::Ptr(
-      new ahl_utils::SharedMemory<double>(sensor_name + "::fz"));
-    mx_[sensor_name + "::mx"] = ahl_utils::SharedMemory<double>::Ptr(
-      new ahl_utils::SharedMemory<double>(sensor_name + "::mx"));
-    my_[sensor_name + "::my"] = ahl_utils::SharedMemory<double>::Ptr(
-      new ahl_utils::SharedMemory<double>(sensor_name + "::my"));
-    mz_[sensor_name + "::mz"] = ahl_utils::SharedMemory<double>::Ptr(
-      new ahl_utils::SharedMemory<double>(sensor_name + "::mz"));
+    fx_[sensor_name + "::fx"] = std::make_shared<ahl_utils::SharedMemory<double>>(sensor_name + "::fx");
+    fy_[sensor_name + "::fy"] = std::make_shared<ahl_utils::SharedMemory<double>>(sensor_name + "::fy");
+    fz_[sensor_name + "::fz"] = std::make_shared<ahl_utils::SharedMemory<double>>(sensor_name + "::fz");
+    mx_[sensor_name + "::mx"] = std::make_shared<ahl_utils::SharedMemory<double>>(sensor_name + "::mx");
+    my_[sensor_name + "::my"] = std::make_shared<ahl_utils::SharedMemory<double>>(sensor_name + "::my");
+    mz_[sensor_name + "::mz"] = std::make_shared<ahl_utils::SharedMemory<double>>(sensor_name + "::mz");
 
     gazebo_msgs::AddForceSensor srv;
     srv.request.joint_name  = joint_name;

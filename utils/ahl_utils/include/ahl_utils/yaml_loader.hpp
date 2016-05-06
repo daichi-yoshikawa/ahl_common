@@ -41,7 +41,7 @@
 
 #include <string>
 #include <fstream>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <yaml-cpp/yaml.h>
 #include <Eigen/Dense>
 #include "ahl_utils/exception.hpp"
@@ -52,7 +52,7 @@ namespace ahl_utils
   class YAMLLoader
   {
   public:
-    YAMLLoader(const std::string& yaml);
+    explicit YAMLLoader(const std::string& yaml);
 
     template<class T>
     bool loadValue(const std::string& tag, T& dst)
@@ -102,7 +102,8 @@ namespace ahl_utils
     YAML::Node doc_;
   };
 
-  typedef boost::shared_ptr<YAMLLoader> YAMLLoaderPtr;
-}
+  using YAMLLoaderPtr = std::shared_ptr<YAMLLoader>;
 
-#endif /* __AHL_UTILS_YAML_LOADER_HPP */
+} // namespace ahl_utils
+
+#endif // __AHL_UTILS_YAML_LOADER_HPP

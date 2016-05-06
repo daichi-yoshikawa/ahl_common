@@ -40,14 +40,13 @@
 #define __AHL_UTILS_SHARED_MEMORY_HPP
 
 #include <string>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/interprocess/managed_shared_memory.hpp>
 #include <boost/interprocess/sync/named_mutex.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>
 #include <boost/interprocess/containers/vector.hpp>
 #include <boost/interprocess/allocators/allocator.hpp>
 
-using namespace std;
 using namespace boost::interprocess;
 
 namespace ahl_utils
@@ -57,9 +56,7 @@ namespace ahl_utils
   class SharedMemory
   {
   public:
-    typedef boost::shared_ptr< SharedMemory<T> > Ptr;
-
-    SharedMemory(const std::string& name, bool remove = false)
+    explicit SharedMemory(const std::string& name, bool remove = false)
       : name_(name)
     {
       size_ = sizeof(T);
@@ -71,24 +68,20 @@ namespace ahl_utils
 
       try
       {
-        shm_    = SharedMemoryObjectPtr(new shared_memory_object(open_or_create, name_.c_str(), read_write));
+        shm_ = std::make_shared<shared_memory_object>(open_or_create, name_.c_str(), read_write);
         shm_->truncate(size_);
       }
       catch(interprocess_exception&)
       {
         shared_memory_object::remove(name.c_str());
-        shm_    = SharedMemoryObjectPtr(new shared_memory_object(open_or_create, name_.c_str(), read_write));
+        shm_ = std::make_shared<shared_memory_object>(open_or_create, name_.c_str(), read_write);
         shm_->truncate(size_);
       }
 
-      region_ = MappedRegionPtr(new mapped_region(*shm_, read_write));
+      region_ = std::make_shared<mapped_region>(*shm_, read_write);
       std::string mutex_name = name + "_mutex";
-      mutex_ = NamedMutexPtr(new named_mutex(open_or_create, mutex_name.c_str()));
+      mutex_ = std::make_shared<named_mutex>(open_or_create, mutex_name.c_str());
       data_ = static_cast<T*>(region_->get_address());
-    }
-
-    ~SharedMemory()
-    {
     }
 
     void write(const T& val)
@@ -114,9 +107,9 @@ namespace ahl_utils
     }
 
   private:
-    typedef boost::shared_ptr<shared_memory_object> SharedMemoryObjectPtr;
-    typedef boost::shared_ptr<mapped_region> MappedRegionPtr;
-    typedef boost::shared_ptr<named_mutex> NamedMutexPtr;
+    using SharedMemoryObjectPtr = std::shared_ptr<shared_memory_object>;
+    using MappedRegionPtr = std::shared_ptr<mapped_region>;
+    using NamedMutexPtr = std::shared_ptr<named_mutex>;
 
     std::string name_;
     unsigned int size_;
@@ -125,6 +118,10 @@ namespace ahl_utils
     NamedMutexPtr mutex_;
     T* data_;
   };
-}
 
-#endif /* __AHL_UTILS_SHARED_MEMORY_HPP */
+  template<typename T>
+  using SharedMemoryPtr = std::shared_ptr<SharedMemory<T>>;
+
+} // namespace ahl_utils
+
+#endif // __AHL_UTILS_SHARED_MEMORY_HPP

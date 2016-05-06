@@ -12,8 +12,7 @@ int main(int argc, char** argv)
   double period = 0.001;
   double cutoff = 30.0;
 
-  DifferentiatorPtr differentiator = DifferentiatorPtr(
-    new PseudoDifferentiator(period, cutoff));
+  DifferentiatorPtr differentiator = std::make_shared<PseudoDifferentiator>(period, cutoff);
   differentiator->init(q, qd);
 
   ros::Rate r(1.0 / period);

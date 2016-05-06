@@ -41,7 +41,7 @@
 
 #include <string>
 #include <map>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 #include <ros/ros.h>
 #include <gazebo_msgs/AddForceSensor.h>
@@ -53,7 +53,7 @@ namespace ahl_gazebo_if
   class ForceSensor
   {
   public:
-    ForceSensor();
+    explicit ForceSensor();
 
     void add(const std::string& joint_name);
     void connect();
@@ -67,17 +67,18 @@ namespace ahl_gazebo_if
     unsigned int sensor_num_;
 
     std::map<std::string, Eigen::VectorXd> f_;
-    std::map<std::string, ahl_utils::SharedMemory<double>::Ptr > fx_;
-    std::map<std::string, ahl_utils::SharedMemory<double>::Ptr > fy_;
-    std::map<std::string, ahl_utils::SharedMemory<double>::Ptr > fz_;
-    std::map<std::string, ahl_utils::SharedMemory<double>::Ptr > mx_;
-    std::map<std::string, ahl_utils::SharedMemory<double>::Ptr > my_;
-    std::map<std::string, ahl_utils::SharedMemory<double>::Ptr > mz_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > fx_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > fy_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > fz_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > mx_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > my_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > mz_;
 
     ros::ServiceClient client_add_force_sensor_;
   };
 
-  typedef boost::shared_ptr<ForceSensor> ForceSensorPtr;
-}
+  using ForceSensorPtr = std::shared_ptr<ForceSensor>;
 
-#endif /* __AHL_GAZEBO_INTERFACE_FORCE_SENSOR_HPP */
+} // namespace ahl_gazebo_if
+
+#endif // __AHL_GAZEBO_INTERFACE_FORCE_SENSOR_HPP

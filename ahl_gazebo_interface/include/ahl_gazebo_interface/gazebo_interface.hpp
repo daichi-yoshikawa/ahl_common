@@ -47,14 +47,14 @@
 
 #include <map>
 #include <vector>
-#include <boost/shared_ptr.hpp>
-#include <boost/thread.hpp>
+#include <memory>
 #include <Eigen/Dense>
 #include <ros/ros.h>
 #include <gazebo_msgs/AddJoint.h>
 #include <gazebo_msgs/StartTimer.h>
 #include <gazebo_msgs/LinkStates.h>
 #include <ahl_utils/shared_memory.hpp>
+#include <ahl_utils/scoped_lock.hpp>
 #include "ahl_gazebo_interface/torque_sensor.hpp"
 #include "ahl_gazebo_interface/force_sensor.hpp"
 
@@ -69,7 +69,7 @@ namespace ahl_gazebo_if
   {
   public:
     /// Constructor
-    GazeboInterface();
+    explicit GazeboInterface();
     /// Destructor
     ~GazeboInterface();
 
@@ -127,7 +127,7 @@ namespace ahl_gazebo_if
 
   private:
     /// Mutex
-    boost::mutex mutex_;
+    std::mutex mutex_;
 
     /// Key : Joint name
     /// Value : Joint index representing the registration order
@@ -160,17 +160,18 @@ namespace ahl_gazebo_if
 
     /// Key : Joint name
     /// Value : Torque to apply
-    std::map<std::string, ahl_utils::SharedMemory<double>::Ptr > joint_effort_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > joint_effort_;
 
     /// Key : Joint name
     /// Value : Joint angle/displacement
-    std::map<std::string, ahl_utils::SharedMemory<double>::Ptr > joint_state_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > joint_state_;
 
     TorqueSensorPtr torque_sensor_;
     ForceSensorPtr force_sensor_;
   };
 
-  typedef boost::shared_ptr<GazeboInterface> GazeboInterfacePtr;
-}
+  using GazeboInterfacePtr = std::shared_ptr<GazeboInterface>;
 
-#endif /* __AHL_GAZEBO_INTERFACE_GAZEBO_INTERFACE_HPP */
+} // namespace ahl_gazebo_if
+
+#endif // __AHL_GAZEBO_INTERFACE_GAZEBO_INTERFACE_HPP

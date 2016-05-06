@@ -93,7 +93,7 @@ int main(int argc, char** argv)
     }
 
     using namespace kf;
-    KalmanFilterPtr kalman_filter = KalmanFilterPtr(new KalmanFilter());
+    KalmanFilterPtr kalman_filter = std::make_shared<KalmanFilter>();
 
     Eigen::MatrixXd init_mean;
     Eigen::MatrixXd init_variance;
@@ -109,11 +109,11 @@ int main(int argc, char** argv)
                            msr_noise_mean, msr_noise_variance);
 
     NormalDistributionPtr init_state
-      = NormalDistributionPtr(new NormalDistribution(init_mean, init_variance));
+      = std::make_shared<NormalDistribution>(init_mean, init_variance);
     NormalDistributionPtr uncertainty
-      = NormalDistributionPtr(new NormalDistribution(uncertainty_mean, uncertainty_variance));
+      = std::make_shared<NormalDistribution>(uncertainty_mean, uncertainty_variance);
     NormalDistributionPtr msr_noise
-      = NormalDistributionPtr(new NormalDistribution(msr_noise_mean, msr_noise_variance));
+      = std::make_shared<NormalDistribution>(msr_noise_mean, msr_noise_variance);
 
     kalman_filter->setRandomVariables(init_state, uncertainty, msr_noise);
 
@@ -129,7 +129,7 @@ int main(int argc, char** argv)
     {
       Eigen::MatrixXd u;
       Eigen::MatrixXd z;
-      NormalDistributionPtr state = NormalDistributionPtr(new NormalDistribution);
+      NormalDistributionPtr state = std::make_shared<NormalDistribution>();
 
       ::updateCtrlDataAndMsrData(i, u, z);
       kalman_filter->estimate(u, z, state);

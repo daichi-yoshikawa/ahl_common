@@ -39,7 +39,7 @@
 #ifndef __KALMAN_FILTER_KALMAN_FILTER_HPP
 #define __KALMAN_FILTER_KALMAN_FILTER_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 
 #include "kalman_filter/normal_distribution.hpp"
@@ -81,7 +81,8 @@ namespace kf
     Eigen::MatrixXd C_;
   };
 
-  typedef boost::shared_ptr<KalmanFilter> KalmanFilterPtr;
-}
+  using KalmanFilterPtr = std::shared_ptr<KalmanFilter>;
 
-#endif /* __KALMAN_FILTER_KALMAN_FILTER_HPP */
+} // namespace kf
+
+#endif // __KALMAN_FILTER_KALMAN_FILTER_HPP

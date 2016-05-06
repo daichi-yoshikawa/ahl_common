@@ -39,7 +39,7 @@
 #ifndef __KALMAN_FILTER_NORMAL_DISTRIBUTION_HPP
 #define __KALMAN_FILTER_NORMAL_DISTRIBUTION_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 
 namespace kf
@@ -73,7 +73,8 @@ namespace kf
     Eigen::MatrixXd variance_;
   };
 
-  typedef boost::shared_ptr<NormalDistribution> NormalDistributionPtr;
-}
+  using NormalDistributionPtr = std::shared_ptr<NormalDistribution>;
 
-#endif /* __KALMAN_FILTER_NORMAL_DISTRIBUTION_HPP */
+} // namespace kf
+
+#endif // __KALMAN_FILTER_NORMAL_DISTRIBUTION_HPP

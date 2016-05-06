@@ -127,11 +127,11 @@ namespace gl_wrapper
   class RightHand : public DeformableHand
   {
   public:
-    virtual void rotate1stFinger(double deg);
-    virtual void rotate2ndFinger(double deg);
-    virtual void rotate3rdFinger(double deg);
-    virtual void rotate4thFinger(double deg);
-    virtual void rotate5thFinger(double deg);
+    virtual void rotate1stFinger(double deg) override;
+    virtual void rotate2ndFinger(double deg) override;
+    virtual void rotate3rdFinger(double deg) override;
+    virtual void rotate4thFinger(double deg) override;
+    virtual void rotate5thFinger(double deg) override;
     RightHand(std::string file_name = "") : file_name_(file_name) {}
     void display();
     void displayWithoutShade();
@@ -144,11 +144,11 @@ namespace gl_wrapper
   class LeftHand : public DeformableHand
   {
   public:
-    virtual void rotate1stFinger(double deg);
-    virtual void rotate2ndFinger(double deg);
-    virtual void rotate3rdFinger(double deg);
-    virtual void rotate4thFinger(double deg);
-    virtual void rotate5thFinger(double deg);
+    virtual void rotate1stFinger(double deg) override;
+    virtual void rotate2ndFinger(double deg) override;
+    virtual void rotate3rdFinger(double deg) override;
+    virtual void rotate4thFinger(double deg) override;
+    virtual void rotate5thFinger(double deg) override;
     LeftHand(std::string file_name = "") : file_name_(file_name) {}
     void display();
     void displayWithoutShade();

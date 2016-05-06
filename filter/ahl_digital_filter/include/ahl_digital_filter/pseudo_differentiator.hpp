@@ -49,11 +49,11 @@ namespace ahl_filter
   class PseudoDifferentiator : public Differentiator
   {
   public:
-    PseudoDifferentiator(double period, double cutoff_freq);
+    explicit PseudoDifferentiator(double period, double cutoff_freq);
 
-    virtual void init(const Eigen::VectorXd& q, const Eigen::VectorXd& dq);
-    virtual void apply(const Eigen::VectorXd& q);
-    virtual void copyDerivativeValueTo(Eigen::VectorXd& dq)
+    virtual void init(const Eigen::VectorXd& q, const Eigen::VectorXd& dq) override;
+    virtual void apply(const Eigen::VectorXd& q) override;
+    virtual void copyDerivativeValueTo(Eigen::VectorXd& dq) override
     {
       dq = dq_;
     }
@@ -70,6 +70,6 @@ namespace ahl_filter
     double coeff2_;
   };
 
-}
+} // namespace ahl_filter
 
-#endif /* __AHL_DIGITAL_FILTER_PSEUDO_DIFFERENTIATOR_HPP */
+#endif // __AHL_DIGITAL_FILTER_PSEUDO_DIFFERENTIATOR_HPP

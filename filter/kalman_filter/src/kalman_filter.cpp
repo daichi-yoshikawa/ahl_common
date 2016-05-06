@@ -11,7 +11,7 @@ void KalmanFilter::setRandomVariables(const NormalDistributionPtr& state,
   uncertainty_ = uncertainty;
   msr_noise_   = msr_noise;
 
-  predicted_state_ = NormalDistributionPtr(new NormalDistribution(state_->getMean(), state_->getVariance()));
+  predicted_state_ = std::make_shared<NormalDistribution>(state_->getMean(), state_->getVariance());
 }
 
 void KalmanFilter::setLinearModel(const Eigen::MatrixXd& coeff_of_mean,

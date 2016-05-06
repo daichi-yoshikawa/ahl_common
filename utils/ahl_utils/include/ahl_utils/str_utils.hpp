@@ -38,6 +38,7 @@
 
 #ifndef __AHL_UTILS_STR_UTILS_HPP
 #define __AHL_UTILS_STR_UTILS_HPP
+
 #include <string>
 #include <sstream>
 #include <vector>
@@ -122,6 +123,6 @@ namespace ahl_utils
     static void separate(const std::string& str, std::vector<std::string>& words, const std::string& delimiters);
   };
 
-}
+} // namespace ahl_utils
 
-#endif /* __AHL_UTILS_STR_UTILS_HPP */
+#endif // __AHL_UTILS_STR_UTILS_HPP

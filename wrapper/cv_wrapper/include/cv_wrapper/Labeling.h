@@ -52,16 +52,14 @@ public:
 		int	y;
 		SrcT	source_value;
 	public:
-		RasterSegment( const int n_left_x, const int n_right_x,
+		explicit RasterSegment( const int n_left_x, const int n_right_x,
 					   const int n_y, const SrcT n_source_value )
 			: left_x( n_left_x ), right_x( n_right_x ), y( n_y ),
 			  source_value( n_source_value )
 		{
 		}
 	
-		~RasterSegment()
-		{
-		}
+		~RasterSegment() = default;
 
 		// get
 

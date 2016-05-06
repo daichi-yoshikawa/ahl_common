@@ -87,6 +87,6 @@ namespace gl_wrapper
     std::string msg_;
   };
 
-}
+} // namespace gl_wrapper
 
-#endif /* __GL_WRAPPER_EXCEPTION_EXCEPTIONS_HPP */
+#endif // __GL_WRAPPER_EXCEPTION_EXCEPTIONS_HPP

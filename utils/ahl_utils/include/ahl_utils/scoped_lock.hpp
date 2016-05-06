@@ -2,7 +2,7 @@
  *
  * Software License Agreement (BSD License)
  *
- *  Copyright (c) 2015, Daichi Yoshikawa
+ *  Copyright (c) 2016, Daichi Yoshikawa
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -36,58 +36,32 @@
  *
  *********************************************************************/
 
-#ifndef __AHL_GAZEBO_INTERFACE_TORQUE_SENSOR_HPP
-#define __AHL_GAZEBO_INTERFACE_TORQUE_SENSOR_HPP
+#ifndef __AHL_UTILS_SCOPED_LOCK_HPP
+#define __AHL_UTILS_SCOPED_LOCK_HPP
 
-#include <string>
-#include <map>
 #include <memory>
-#include <Eigen/Dense>
-#include <ros/ros.h>
-#include <gazebo_msgs/AddTorqueSensor.h>
-#include <ahl_utils/shared_memory.hpp>
+#include <mutex>
 
-namespace ahl_gazebo_if
+namespace ahl_utils
 {
 
-  class TorqueSensor
+  class ScopedLock
   {
   public:
-    /// Constructor
-    explicit TorqueSensor();
-
-    /// Register torque sensor name to get sensed torque
-    /// @param name Name of joint you'd like to add torque sensor to (mostly like pr2::shoulder_pan)
-    void add(const std::string& joint_name);
-
-    /// Initialize and connect the communication with gazebo simulator
-    void connect();
-
-    const Eigen::VectorXd& getJointTorque();
+    explicit ScopedLock(std::mutex& mutex)
+      : mutex_(mutex)
+    {
+      mutex_.lock();
+    }
+    ~ScopedLock()
+    {
+      mutex_.unlock();
+    }
 
   private:
-    /// Key : Torque sensor name
-    /// Value : Torque sensor index representing the registration order
-    std::map<std::string, int> sensor_to_idx_;
-
-    /// Torque sensor name list
-    std::vector<std::string> sensor_list_;
-
-    /// Number of registered sensor
-    unsigned int sensor_num_;
-
-    /// Sensed torque
-    Eigen::VectorXd tau_;
-
-    /// Key : Torque sensor name
-    /// Value : Sensed torque
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > state_;
-
-    ros::ServiceClient client_add_torque_sensor_;
+    std::mutex& mutex_;
   };
 
-  using TorqueSensorPtr = std::shared_ptr<TorqueSensor>;
+} // namespace ahl_utils
 
-} // namespace ahl_gazebo_if
-
-#endif // __AHL_GAZEBO_INTERFACE_TORQUE_SENSOR_HPP
+#endif // __AHL_UTILS_SCOPED_LOCK_HPP

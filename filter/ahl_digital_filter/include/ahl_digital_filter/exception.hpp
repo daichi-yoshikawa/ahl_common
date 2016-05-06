@@ -47,7 +47,7 @@ namespace ahl_filter
   class Exception
   {
   public:
-    Exception(const std::string& src, const std::string& msg) throw()
+    explicit Exception(const std::string& src, const std::string& msg) throw()
       : src_(src), msg_(msg)
     {}
 
@@ -67,6 +67,6 @@ namespace ahl_filter
     std::string msg_;
   };
 
-}
+} // namespace ahl_filter
 
-#endif /* __AHL_DIGITAL_FILTER_EXCEPTION_HPP */
+#endif // __AHL_DIGITAL_FILTER_EXCEPTION_HPP

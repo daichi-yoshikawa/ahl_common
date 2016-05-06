@@ -67,6 +67,6 @@ namespace ahl_utils
     std::string msg_;
   };
 
-}
+} // namespace ahl_utils
 
-#endif /* __AHL_UTILS_EXCEPTION_HPP */
+#endif // __AHL_UTILS_EXCEPTION_HPP

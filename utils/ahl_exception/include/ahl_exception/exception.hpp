@@ -11,7 +11,7 @@ namespace ahl
   public:
     explicit Exception(const std::string& src, const std::string& msg)
       : src_(src), msg_(msg) throw() {}
-    ~virtual Exception() {}
+    ~virtual Exception() = default;
 
     virtual const char* what() const throw()
     {

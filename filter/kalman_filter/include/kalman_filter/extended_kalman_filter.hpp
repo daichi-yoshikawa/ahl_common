@@ -39,7 +39,7 @@
 #ifndef __KALMAN_FILTER_EXTENDED_KALMAN_FILTER_HPP
 #define __KALMAN_FILTER_EXTENDED_KALMAN_FILTER_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <Eigen/Dense>
 
 #include "kalman_filter/normal_distribution.hpp"
@@ -53,18 +53,16 @@ namespace kf
     void setRandomVariables(const NormalDistributionPtr& state,
                             const NormalDistributionPtr& uncertainty,
                             const NormalDistributionPtr& msr_noise);
-    void setModel(
 
   private:
-
-
     NormalDistributionPtr state_;
     NormalDistributionPtr predicted_state_;
     NormalDistributionPtr uncertainty_;
     NormalDistributionPtr msr_noise_;
   };
 
-  typedef boost::shared_ptr<ExtendedKalmanFilter> ExtendedKalmanFilterPtr;
-}
+  using ExtendedKalmanFilterPtr = std::shared_ptr<ExtendedKalmanFilter>;
 
-#endif /* __KALMAN_FILTER_EXTENDED_KALMAN_FILTER_HPP */
+} // namespace kf
+
+#endif // __KALMAN_FILTER_EXTENDED_KALMAN_FILTER_HPP

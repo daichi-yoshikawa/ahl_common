@@ -20,7 +20,7 @@ void TorqueSensor::add(const std::string& joint_name)
     sensor_to_idx_[sensor_name] = size;
     sensor_list_.push_back(sensor_name);
 
-    state_[sensor_name] = ahl_utils::SharedMemory<double>::Ptr(new ahl_utils::SharedMemory<double>(sensor_name));
+    state_[sensor_name] = std::make_shared<ahl_utils::SharedMemory<double>>(sensor_name);
 
     gazebo_msgs::AddTorqueSensor srv;
     srv.request.joint_name  = joint_name;

@@ -52,6 +52,6 @@ namespace ahl_utils
     static std::string getVectorStr(const std::string& tag, const Eigen::MatrixXd& m);
   };
 
-}
+} // namespace ahl_utils
 
-#endif /* __AHL_UTILS_YAML_UTILS_HPP */
+#endif // __AHL_UTILS_YAML_UTILS_HPP
