@@ -64,7 +64,7 @@ void GazeboInterface::addJoint(const std::string& name, double effort_time)
 {
   if(joint_to_idx_.find(name) == joint_to_idx_.end())
   {
-    unsigned int size = joint_to_idx_.size();
+    uint32_t size = joint_to_idx_.size();
     joint_to_idx_[name] = size;
     joint_list_.push_back(name);
 
@@ -129,7 +129,7 @@ void GazeboInterface::applyJointEfforts(const Eigen::VectorXd& tau)
     throw ahl_gazebo_if::Exception("ahl_gazebo_if::GazeboInterface::applyJointEfforts", msg.str());
   }
 
-  for(unsigned int i = 0; i < joint_list_.size(); ++i)
+  for(uint32_t i = 0; i < joint_list_.size(); ++i)
   {
     if(joint_to_idx_.find(joint_list_[i]) == joint_to_idx_.end())
     {
@@ -180,7 +180,7 @@ void GazeboInterface::translateLink(const std::vector<Eigen::Vector3d>& p)
     throw ahl_gazebo_if::Exception("GazeboInterface::translateLink", msg.str());
   }
 
-  for(unsigned int i = 0; i < p.size(); ++i)
+  for(uint32_t i = 0; i < p.size(); ++i)
   {
     link_states_.pose[i].position.x = p[i].coeff(0);
     link_states_.pose[i].position.y = p[i].coeff(1);
@@ -206,7 +206,7 @@ void GazeboInterface::rotateLink(const std::vector<Eigen::Quaternion<double> >& 
     throw ahl_gazebo_if::Exception("GazeboInterface::rotateLink", msg.str());
   }
 
-  for(unsigned int i = 0; i < q.size(); ++i)
+  for(uint32_t i = 0; i < q.size(); ++i)
   {
     link_states_.pose[i].position.x = 0.0;
     link_states_.pose[i].position.y = 0.0;
@@ -225,7 +225,7 @@ const Eigen::VectorXd& GazeboInterface::getJointStates()
 {
   ahl_utils::ScopedLock lock(mutex_);
 
-  for(unsigned int i = 0; i < joint_list_.size(); ++i)
+  for(uint32_t i = 0; i < joint_list_.size(); ++i)
   {
     if(joint_to_idx_.find(joint_list_[i]) == joint_to_idx_.end())
     {

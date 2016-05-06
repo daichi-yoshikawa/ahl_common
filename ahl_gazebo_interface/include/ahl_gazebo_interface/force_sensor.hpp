@@ -62,17 +62,17 @@ namespace ahl_gazebo_if
     const std::map<std::string, Eigen::VectorXd>& getExternalForce();
 
   private:
-    std::map<std::string, int> sensor_to_idx_;
+    std::map<std::string, int32_t> sensor_to_idx_;
     std::vector<std::string> sensor_list_;
-    unsigned int sensor_num_;
+    uint32_t sensor_num_;
 
     std::map<std::string, Eigen::VectorXd> f_;
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > fx_;
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > fy_;
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > fz_;
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > mx_;
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > my_;
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > mz_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double>> fx_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double>> fy_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double>> fz_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double>> mx_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double>> my_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double>> mz_;
 
     ros::ServiceClient client_add_force_sensor_;
   };

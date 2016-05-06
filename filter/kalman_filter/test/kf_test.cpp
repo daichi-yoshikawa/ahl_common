@@ -53,7 +53,7 @@ void initLinearModel(Eigen::MatrixXd& A, Eigen::MatrixXd& B, Eigen::MatrixXd& C)
        0.0, 1.0;
 }
 
-void updateCtrlDataAndMsrData(unsigned int idx, Eigen::MatrixXd& u, Eigen::MatrixXd& z)
+void updateCtrlDataAndMsrData(uint32_t idx, Eigen::MatrixXd& u, Eigen::MatrixXd& z)
 {
   double t = SAMPLING_TIME * idx;
   double angle = 2.0 * M_PI * FREQUENCY * t;
@@ -71,7 +71,7 @@ void updateCtrlDataAndMsrData(unsigned int idx, Eigen::MatrixXd& u, Eigen::Matri
 
 int main(int argc, char** argv)
 {
-  std::srand(static_cast<unsigned int>(std::time(NULL)));
+  std::srand(static_cast<unsigned int32_t>(std::time(NULL)));
 
   try
   {
@@ -125,7 +125,7 @@ int main(int argc, char** argv)
 
     kalman_filter->setLinearModel(A, B, C);
 
-    for(unsigned int i = 0; i < ITERATIONS; ++i)
+    for(uint32_t i = 0; i < ITERATIONS; ++i)
     {
       Eigen::MatrixXd u;
       Eigen::MatrixXd z;
@@ -134,13 +134,13 @@ int main(int argc, char** argv)
       ::updateCtrlDataAndMsrData(i, u, z);
       kalman_filter->estimate(u, z, state);
 
-      for(unsigned int i = 0; i < kalman_filter->getPredictedState()->getMean().rows(); ++i)
+      for(uint32_t i = 0; i < kalman_filter->getPredictedState()->getMean().rows(); ++i)
       {
         ofs1 << kalman_filter->getPredictedState()->getMean().coeff(i) << ", ";
       }
       ofs1 << std::endl;
 
-      for(unsigned int i = 0; i < kalman_filter->getState()->getMean().rows(); ++i)
+      for(uint32_t i = 0; i < kalman_filter->getState()->getMean().rows(); ++i)
       {
         ofs2 << kalman_filter->getState()->getMean().coeff(i) << ", ";
       }

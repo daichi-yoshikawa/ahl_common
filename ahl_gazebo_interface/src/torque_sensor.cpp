@@ -16,7 +16,7 @@ void TorqueSensor::add(const std::string& joint_name)
 
   if(sensor_to_idx_.find(sensor_name) == sensor_to_idx_.end())
   {
-    unsigned int size = sensor_to_idx_.size();
+    uint32_t size = sensor_to_idx_.size();
     sensor_to_idx_[sensor_name] = size;
     sensor_list_.push_back(sensor_name);
 
@@ -43,7 +43,7 @@ void TorqueSensor::connect()
 
 const Eigen::VectorXd& TorqueSensor::getJointTorque()
 {
-  for(unsigned int i = 0; i < sensor_num_; ++i)
+  for(uint32_t i = 0; i < sensor_num_; ++i)
   {
     if(sensor_to_idx_.find(sensor_list_[i]) == sensor_to_idx_.end())
     {

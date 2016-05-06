@@ -68,13 +68,13 @@ namespace ahl_gazebo_if
   private:
     /// Key : Torque sensor name
     /// Value : Torque sensor index representing the registration order
-    std::map<std::string, int> sensor_to_idx_;
+    std::map<std::string, int32_t> sensor_to_idx_;
 
     /// Torque sensor name list
     std::vector<std::string> sensor_list_;
 
     /// Number of registered sensor
-    unsigned int sensor_num_;
+    uint32_t sensor_num_;
 
     /// Sensed torque
     Eigen::VectorXd tau_;

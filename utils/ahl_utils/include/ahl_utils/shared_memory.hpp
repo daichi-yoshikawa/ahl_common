@@ -101,7 +101,7 @@ namespace ahl_utils
       return name_;
     }
 
-    unsigned int getSize()
+    uint32_t getSize()
     {
       return size_;
     }
@@ -112,7 +112,7 @@ namespace ahl_utils
     using NamedMutexPtr = std::shared_ptr<named_mutex>;
 
     std::string name_;
-    unsigned int size_;
+    uint32_t size_;
     SharedMemoryObjectPtr shm_;
     MappedRegionPtr region_;
     NamedMutexPtr mutex_;

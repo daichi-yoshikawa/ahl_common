@@ -105,7 +105,7 @@ namespace ahl_utils
         return false;
 
       vec.resize(words.size());
-      for(unsigned int i = 0; i < words.size(); ++i)
+      for(uint32_t i = 0; i < words.size(); ++i)
       {
         if(!StrUtils::convertToNum<T>(words[i], vec[i]))
         {

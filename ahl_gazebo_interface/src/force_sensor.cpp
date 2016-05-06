@@ -54,7 +54,7 @@ void ForceSensor::add(const std::string& joint_name)
 
   if(sensor_to_idx_.find(sensor_name) == sensor_to_idx_.end())
   {
-    unsigned int size = sensor_to_idx_.size();
+    uint32_t size = sensor_to_idx_.size();
     sensor_to_idx_[sensor_name] = size;
     sensor_list_.push_back(sensor_name);
 
@@ -82,7 +82,7 @@ void ForceSensor::connect()
 {
   sensor_num_ = sensor_list_.size();
 
-  for(unsigned int i = 0; i < sensor_num_; ++i)
+  for(uint32_t i = 0; i < sensor_num_; ++i)
   {
     f_[sensor_list_[i]] = Eigen::VectorXd::Zero(6); // fxfyfz, mxmymz
   }
@@ -99,7 +99,7 @@ const Eigen::VectorXd& ForceSensor::getExternalForce(const std::string& joint_na
     throw ahl_gazebo_if::Exception("ForceSensor::getExternalForce", msg.str());
   }
 
-  int idx = sensor_to_idx_[sensor_name];
+  int32_t idx = sensor_to_idx_[sensor_name];
 
   fx_[sensor_name + "::fx"]->read(f_[sensor_name][0]);
   fy_[sensor_name + "::fy"]->read(f_[sensor_name][1]);
@@ -113,7 +113,7 @@ const Eigen::VectorXd& ForceSensor::getExternalForce(const std::string& joint_na
 
 const std::map<std::string, Eigen::VectorXd>& ForceSensor::getExternalForce()
 {
-  for(unsigned int i = 0; i < sensor_list_.size(); ++i)
+  for(uint32_t i = 0; i < sensor_list_.size(); ++i)
   {
     if(f_.find(sensor_list_[i]) == f_.end())
     {

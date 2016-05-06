@@ -43,9 +43,9 @@ using namespace ahl_utils;
 void IOUtils::print(const Eigen::MatrixXd& m)
 {
   std::cout << "[ ";
-  for(unsigned int i = 0; i < m.rows(); ++i)
+  for(uint32_t i = 0; i < m.rows(); ++i)
   {
-    for(unsigned int j = 0; j < m.cols(); ++j)
+    for(uint32_t j = 0; j < m.cols(); ++j)
     {
       std::cout << m.coeff(i, j);
       if(j < m.cols() - 1)
@@ -70,7 +70,7 @@ bool IOUtils::getValues(std::ifstream& ifs, Eigen::MatrixXd& dst)
   StrUtils::separate(str, words, ",;: \t");
 
   dst = Eigen::MatrixXd::Zero(words.size(), 1);
-  for(unsigned int j = 0; j < words.size(); ++j)
+  for(uint32_t j = 0; j < words.size(); ++j)
   {
     StrUtils::convertToNum(words[j], dst.coeffRef(j, 0));
   }

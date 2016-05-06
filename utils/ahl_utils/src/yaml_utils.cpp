@@ -62,7 +62,7 @@ std::string YAMLUtils::getVectorStr(const std::string& tag, const Eigen::MatrixX
   }
 
   msg << m.coeff(0, 0);
-  for(unsigned int i = 1; i < m.rows(); ++i)
+  for(uint32_t i = 1; i < m.rows(); ++i)
   {
     msg << ", " << m.coeff(i, 0);
   }

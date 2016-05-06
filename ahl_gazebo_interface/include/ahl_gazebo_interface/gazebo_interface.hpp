@@ -131,7 +131,7 @@ namespace ahl_gazebo_if
 
     /// Key : Joint name
     /// Value : Joint index representing the registration order
-    std::map<std::string, int> joint_to_idx_;
+    std::map<std::string, int32_t> joint_to_idx_;
 
     /// Joint name list
     std::vector<std::string> joint_list_;
@@ -160,11 +160,11 @@ namespace ahl_gazebo_if
 
     /// Key : Joint name
     /// Value : Torque to apply
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > joint_effort_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double>> joint_effort_;
 
     /// Key : Joint name
     /// Value : Joint angle/displacement
-    std::map<std::string, ahl_utils::SharedMemoryPtr<double> > joint_state_;
+    std::map<std::string, ahl_utils::SharedMemoryPtr<double>> joint_state_;
 
     TorqueSensorPtr torque_sensor_;
     ForceSensorPtr force_sensor_;

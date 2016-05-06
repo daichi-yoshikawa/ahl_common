@@ -45,9 +45,9 @@ using namespace ahl_utils;
 
 bool StrUtils::have(const std::string& str, char ch)
 {
-  unsigned int length = str.length();
+  uint32_t length = str.length();
 
-  for(unsigned int i = 0; i < length; ++i)
+  for(uint32_t i = 0; i < length; ++i)
   {
     if(str[i] == ch)
       return false;
@@ -58,9 +58,9 @@ bool StrUtils::have(const std::string& str, char ch)
 
 bool StrUtils::have(const std::string& str, const std::vector<char>& chs)
 {
-  unsigned int size = chs.size();
+  uint32_t size = chs.size();
 
-  for(unsigned int i = 0; i < size; ++i)
+  for(uint32_t i = 0; i < size; ++i)
   {
     if(!StrUtils::have(str, chs[i]))
       return false;
@@ -76,12 +76,12 @@ bool StrUtils::have(const std::string& str, const std::string& word)
 
 bool StrUtils::isAlphabet(const std::string& str)
 {
-  unsigned int length = str.length();
+  uint32_t length = str.length();
 
   if(length == 0)
     return false;
 
-  for(unsigned int i = 0; i < length; ++i)
+  for(uint32_t i = 0; i < length; ++i)
   {
     if(!std::isalpha(str[i]))
       return false;
@@ -110,9 +110,9 @@ bool StrUtils::isIPAddress(const std::string& str)
   if(words.size() != 4)
     return false;
 
-  for(int i = 0; i < words.size(); ++i)
+  for(int32_t i = 0; i < words.size(); ++i)
   {
-    for(int j = 0; j < words[i].length(); ++j)
+    for(int32_t j = 0; j < words[i].length(); ++j)
     {
       if(words[i][j] < '0' || '9' < words[i][j])
         return false;
@@ -137,7 +137,7 @@ void StrUtils::removeSpace(std::string& str)
 
 void StrUtils::removeIndent(std::string& str)
 {
-  for(unsigned int i = 0; i < str.length(); ++i)
+  for(uint32_t i = 0; i < str.length(); ++i)
   {
     if(str[i] == ' ' || str[i] == '\t')
     {
@@ -151,7 +151,7 @@ void StrUtils::removeIndent(std::string& str)
 
 void StrUtils::remove(std::string& str, char ch)
 {
-  for(unsigned int i = 0; i < str.length(); ++i)
+  for(uint32_t i = 0; i < str.length(); ++i)
   {
     if(str[i] == ch)
     {

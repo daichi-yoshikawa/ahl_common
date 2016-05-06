@@ -59,7 +59,7 @@ namespace ahl_utils
     static void print(const std::vector<T>& v)
     {
       std::cout << "[ ";
-      for(unsigned int i = 0; i < v.size(); ++i)
+      for(uint32_t i = 0; i < v.size(); ++i)
       {
         std::cout << v[i];
         if(i < v.size() - 1)
@@ -74,9 +74,9 @@ namespace ahl_utils
     static void print(const std::vector< std::vector<T> >& m)
     {
       std::cout << "[ ";
-      for(unsigned int i = 0; i < m.size(); ++i)
+      for(uint32_t i = 0; i < m.size(); ++i)
       {
-        for(unsigned int j = 0; j < m[i].size(); ++j)
+        for(uint32_t j = 0; j < m[i].size(); ++j)
         {
           std::cout << m[i][j];
           if(j < m[i].size() - 1)

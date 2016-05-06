@@ -61,7 +61,7 @@ bool YAMLLoader::loadVector(const std::string& tag, Eigen::MatrixXd& dst)
   try
   {
     dst.resize(doc_[tag].size(), 1);
-    for(unsigned int i = 0; i < doc_[tag].size(); ++i)
+    for(uint32_t i = 0; i < doc_[tag].size(); ++i)
     {
       dst.coeffRef(i, 0) = doc_[tag][i].as<double>();
     }
@@ -81,18 +81,18 @@ bool YAMLLoader::loadMatrix(const std::string& tag, Eigen::MatrixXd& dst)
 
   try
   {
-    unsigned int rows = doc_[tag].size();
+    uint32_t rows = doc_[tag].size();
     if(rows == 0)
     {
       throw ahl_utils::Exception("YAMLLoader::loadMatrix", "rows is zero.");
     }
-    unsigned int cols = doc_[tag][0].size();
+    uint32_t cols = doc_[tag][0].size();
 
     dst.resize(rows, cols);
 
-    for(unsigned int i = 0; i < rows; ++i)
+    for(uint32_t i = 0; i < rows; ++i)
     {
-      for(unsigned int j = 0; j < cols; ++j)
+      for(uint32_t j = 0; j < cols; ++j)
       {
         dst.coeffRef(i, j) = doc_[tag][i][j].as<double>();
       }

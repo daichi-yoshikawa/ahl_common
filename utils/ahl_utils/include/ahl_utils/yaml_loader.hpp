@@ -81,7 +81,7 @@ namespace ahl_utils
       try
       {
         dst.resize(doc_[tag].size());
-        for(unsigned int i = 0; i < doc_[tag].size(); ++i)
+        for(uint32_t i = 0; i < doc_[tag].size(); ++i)
         {
           dst[i] = doc_[tag][i].as<T>();
         }
