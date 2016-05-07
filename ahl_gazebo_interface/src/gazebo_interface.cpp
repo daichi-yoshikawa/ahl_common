@@ -69,7 +69,7 @@ void GazeboInterface::addJoint(const std::string& name, double effort_time)
     joint_list_.push_back(name);
 
     joint_effort_[name] = std::make_shared<ahl_utils::SharedMemory<double>>(name + "::effort");
-  joint_state_[name]  = std::make_shared<ahl_utils::SharedMemory<double>>(name + "::state");
+    joint_state_[name]  = std::make_shared<ahl_utils::SharedMemory<double>>(name + "::state");
 
     gazebo_msgs::AddJoint srv;
     srv.request.name = name;
@@ -77,7 +77,8 @@ void GazeboInterface::addJoint(const std::string& name, double effort_time)
     if(!client_add_joint_.call(srv))
     {
       std::stringstream msg;
-      msg << "Could not add joint : " << name;
+      msg << "Could not add joint : " << name << std::endl
+          << "Launch simulator(like pr2.launch of ahl_pr2_description) first.";
       throw ahl_gazebo_if::Exception("GazeboInterface::addJoint", msg.str());
     }
   }
