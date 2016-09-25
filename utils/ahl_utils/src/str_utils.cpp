@@ -170,7 +170,7 @@ void StrUtils::separate(const std::string& str, std::vector<std::string>& words,
   tokenizer tokens(str, sep);
 
   words.clear();
-  for(tokenizer::iterator it = tokens.begin(); it != tokens.end(); ++it)
+  for(auto it = std::begin(tokens); it != std::end(tokens); ++it)
   {
     if(*it != "")
       words.push_back(*it);

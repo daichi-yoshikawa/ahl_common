@@ -71,7 +71,7 @@ void updateCtrlDataAndMsrData(uint32_t idx, Eigen::MatrixXd& u, Eigen::MatrixXd&
 
 int main(int argc, char** argv)
 {
-  std::srand(static_cast<unsigned int32_t>(std::time(NULL)));
+  std::srand(static_cast<unsigned int32_t>(std::time(nullptr)));
 
   try
   {
